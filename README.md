@@ -161,7 +161,7 @@ npx expo start
 Made with ❤️ by **Arpit Rai**
 
 📬 [arpitrai1809@gmail.com](mailto:arpitrai1809@gmail.com)
-🌐 [LinkedIn](https://linkedin.com/in/arpitrai) | [GitHub](https://github.com/arpitr18)
+🌐 [LinkedIn](https://linkedin.com/in/arpitr18) | [GitHub](https://github.com/arpitr18)
 
 ---
 
