@@ -16,7 +16,8 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to MyApp</Text>
+      <Text style={styles.title}>Welcome to ABStart</Text>
+      <Text style={styles.tagline}>Your Digitial HR Partner </Text>
       <ActivityIndicator size="large" color="#2563eb" />
     </View>
   );
@@ -32,7 +33,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     color: "white",
-    marginBottom: 20,
+    marginBottom: 7,
     fontWeight: "bold",
+  },
+  tagline: {
+    fontSize: 14,
+    color: "white",
+    opacity: 0.9,
+    marginBottom: 20,
   },
 });

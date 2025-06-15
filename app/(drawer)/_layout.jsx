@@ -25,13 +25,13 @@ function CustomDrawerContent(props) {
     { title: "My Attendance ", icon: "user" },
     { title: "Team Attendance ", icon: "users" },
     { title: "My Team Employees ", icon: "briefcase" },
-    { title: "My Regularizatio n", icon: "settings" },
+    { title: "My Regularization ", icon: "settings" },
     { title: "Team Regularization ", icon: "settings" },
     { title: "My Leave ", icon: "calendar" },
     { title: "Team Leaves ", icon: "users" },
   ];
 
-  const handleLogout = ({navigation}) => {
+  const handleLogout = ({ navigation }) => {
     Alert.alert("Confirm Logout", "Are you sure you want to logout?", [
       { text: "Cancel", style: "cancel" },
       {
@@ -40,6 +40,7 @@ function CustomDrawerContent(props) {
         onPress: async () => {
           try {
             await AsyncStorage.removeItem("isLoggedIn");
+            // await AsyncStorage.clear();
             router.replace("/");
           } catch (err) {
             console.error("Logout error:", err);
@@ -70,11 +71,7 @@ function CustomDrawerContent(props) {
       colors={["#1e40af", "#3b82f6"]}
       style={styles.drawerContainer}
     >
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={styles.drawerContent}
-      >
-        <TouchableOpacity
+      <TouchableOpacity
           onPress={() => {
             router.push("/(tabs)/profile");
           }}
@@ -113,23 +110,28 @@ function CustomDrawerContent(props) {
             </View>
           </View>
         </TouchableOpacity>
+      <DrawerContentScrollView
+        {...props}
+        contentContainerStyle={styles.drawerContent}
+      >
+        
 
         <View style={styles.menuSection}>
           {menuItems.map((item, index) => (
             <TouchableOpacity key={index} style={styles.menuItem}>
-              <Feather name={item.icon} size={20} color="#10b981" />
               <Text style={styles.menuText}>{item.title}</Text>
+              <Feather name="arrow-right-circle" size={20} color="#10b981" />
             </TouchableOpacity>
           ))}
         </View>
       </DrawerContentScrollView>
 
       <View style={styles.footer}>
-        <Text style={styles.appVersion}>App Version: 2.0.12</Text>
+        <Text style={styles.appVersion}>App Version: 2.0.12 </Text>
 
         <Pressable style={styles.logoutButton} onPress={handleLogout}>
-          <Feather name="log-out" size={20} color="white" />
           <Text style={styles.logoutText}>LOGOUT</Text>
+          <Feather name="log-out" size={20} color="white" />
         </Pressable>
       </View>
     </LinearGradient>
@@ -157,6 +159,7 @@ const styles = StyleSheet.create({
   drawerContainer: {
     flex: 1,
     justifyContent: "center",
+    paddingVertical:20
   },
   drawerContent: {
     flexGrow: 1,
@@ -238,12 +241,16 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent:"space-between",
     paddingHorizontal: 20,
     paddingVertical: 15,
+    backgroundColor: "rgba(255,255,255,0.7)",
+    marginVertical: 5,
+    borderRadius: 10,
   },
   menuText: {
     fontSize: 16,
-    color: "white",
+    color: "#ef4444",
     marginLeft: 15,
   },
   footer: {
@@ -267,8 +274,10 @@ const styles = StyleSheet.create({
   },
   logoutText: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "800",
     color: "white",
-    marginLeft: 10,
+    marginRight: 10,
   },
 });
+
+

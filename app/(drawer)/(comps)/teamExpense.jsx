@@ -10,26 +10,33 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import ModalDropdown from "react-native-modal-dropdown";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Dropdown } from "react-native-element-dropdown";
 
-export default function myLeaves() {
+export default function teamExpense() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
-  const [selectedModule, setSelectedModule] = useState("Select Module");
+  const [selectedModule, setSelectedModule] = useState("Select Department");
   const [selectedStatus, setSelectedStatus] = useState("Select Status");
   const [filter, setFilter] = useState(false);
 
-  const moduleOptions = ["Half-Day", "Full-Day"];
-  const statusOptions = ["Pending", "Accepted", "Approved", "Canceled"];
+  const moduleOptions = [
+    "HR",
+    "Accounts",
+    "IT",
+    "Business Development ",
+    "Finance",
+  ];
+  const statusOptions = ["Absent", "Present", "Late Mark "];
 
   const handleReset = () => {
     setFromDate("");
     setToDate("");
-    setSelectedModule("Select Module");
+    setSelectedModule("Select Department");
     setSelectedStatus("Select Status");
   };
 
@@ -40,11 +47,6 @@ export default function myLeaves() {
       selectedModule,
       selectedStatus,
     });
-  };
-
-  const handleRaiseTicket = () => {
-    router.push("/applyLeave");
-    console.log("Navigate to Raise New Ticket Screen");
   };
 
   const formatDate = (date) => {
@@ -62,7 +64,7 @@ export default function myLeaves() {
         >
           <Feather name="arrow-left" size={24} color="#3b82f6" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>My Leaves</Text>
+        <Text style={styles.headerTitle}>Team Expense </Text>
         <TouchableOpacity
           onPress={() => setFilter(!filter)}
           style={styles.filterButton}
@@ -73,6 +75,20 @@ export default function myLeaves() {
 
       {filter && (
         <View style={styles.filterContainer}>
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              placeholder="Seach by Employee Name"
+              placeholderTextColor="#9ca3af"
+              autoCapitalize="characters"
+            />
+            <Feather
+              name="user"
+              size={20}
+              color="#6b7280"
+              style={styles.inputIcon}
+            />
+          </View>
           <View style={styles.dateRow}>
             <TouchableOpacity
               style={styles.dateInput}
@@ -113,28 +129,6 @@ export default function myLeaves() {
             />
           )}
 
-          <View style={styles.dropdownRow}>
-            <Dropdown
-              data={moduleOptions.map((item) => ({ label: item, value: item }))}
-              labelField="label"
-              valueField="value"
-              placeholder="Select Leave type"
-              style={styles.dropdown}
-              value={selectedModule}
-              onChange={(item) => setSelectedModule(item.value)}
-            />
-
-            <Dropdown
-              data={statusOptions.map((item) => ({ label: item, value: item }))}
-              labelField="label"
-              valueField="value"
-              value={selectedStatus}
-              onChange={(item) => setSelectedStatus(item.value)}
-              placeholder="Select Status"
-              style={styles.dropdown}
-            />
-          </View>
-
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
               <Feather name="rotate-ccw" size={18} color="white" />
@@ -160,14 +154,6 @@ export default function myLeaves() {
           </View>
         </View>
       </ScrollView>
-
-      <TouchableOpacity
-        style={styles.floatingButton}
-        onPress={handleRaiseTicket}
-      >
-        <Feather name="plus" size={20} color="white" />
-        <Text style={styles.floatingButtonText}>Apply Leave</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -197,7 +183,7 @@ const styles = StyleSheet.create({
     color: "#3b82f6",
   },
   filterButton: {
-    alignSelf: "flex-end",
+    // alignSelf: "flex-end",
     padding: 5,
   },
   content: {
@@ -239,6 +225,21 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     fontSize: 14,
     color: "#1f2937",
+  },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f9fafb",
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    elevation: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
   dropdownRow: {
     flexDirection: "row",
@@ -320,7 +321,7 @@ const styles = StyleSheet.create({
   emptyStateText: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#6b7280",
+    color: "#ef4444",
     marginTop: 15,
     marginBottom: 5,
   },

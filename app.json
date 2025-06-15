@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ERP",
-    "slug": "ERP",
+    "name": "ABStart",
+    "slug": "ABStart",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "erp",
+    "icon": "./assets/images/Logo.jpg",
+    "scheme": "hr",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.arpitr18.HR"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a3557124-8905-4afc-8164-007d489f6a15"
+      }
     }
   }
 }

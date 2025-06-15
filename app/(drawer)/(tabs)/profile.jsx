@@ -61,12 +61,12 @@ export default function ProfileScreen() {
     const dataMap = {
       Basic: [
         { label: "Full Name", value: "Arpit Rai", icon: "user" },
-        { label: "Date of Birth", value: "23-Apr-1990", icon: "calendar" },
+        { label: "Date of Birth", value: "18-Sept-2004", icon: "calendar" },
         { label: "Gender", value: "Male", icon: "user" },
-        { label: "Mobile", value: "3465878965", icon: "phone" },
-        { label: "Email", value: "nitin.pr2002@gmail.com", icon: "mail" },
-        { label: "Current Address", value: "test", icon: "home" },
-        { label: "Permanent Address", value: "test", icon: "home" },
+        { label: "Mobile", value: "8369310785", icon: "phone" },
+        { label: "Email", value: "arpitrai1809@gmail.com", icon: "mail" },
+        { label: "Current Address", value: "Kandivali", icon: "home" },
+        { label: "Permanent Address", value: "Noida", icon: "home" },
       ],
       Emp: [
         { label: "Department", value: "Accounts", icon: "briefcase" },
@@ -74,8 +74,8 @@ export default function ProfileScreen() {
         { label: "Designation", value: "Manager", icon: "award" },
       ],
       Family: [
-        { label: "Spouse Name", value: "Arpit Rai", icon: "user" },
-        { label: "Children", value: "2", icon: "users" },
+        { label: "Spouse Name", value: "Unmarried", icon: "user" },
+        { label: "Children", value: "N/A", icon: "users" },
       ],
       Bank: [
         { label: "Bank Name", value: "HDFC", icon: "credit-card" },

@@ -13,8 +13,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Dropdown } from "react-native-element-dropdown";
+import AppliedExpenseCard from "../../../components/AppliedExpenseCard";
 
-export default function myLeaves() {
+export default function myExpense() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [showFromPicker, setShowFromPicker] = useState(false);
@@ -43,8 +44,7 @@ export default function myLeaves() {
   };
 
   const handleRaiseTicket = () => {
-    router.push("/applyLeave");
-    console.log("Navigate to Raise New Ticket Screen");
+    router.push("/applyExpense");
   };
 
   const formatDate = (date) => {
@@ -62,7 +62,7 @@ export default function myLeaves() {
         >
           <Feather name="arrow-left" size={24} color="#3b82f6" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>My Leaves</Text>
+        <Text style={styles.headerTitle}>My Expense</Text>
         <TouchableOpacity
           onPress={() => setFilter(!filter)}
           style={styles.filterButton}
@@ -113,25 +113,18 @@ export default function myLeaves() {
             />
           )}
 
-          <View style={styles.dropdownRow}>
-            <Dropdown
-              data={moduleOptions.map((item) => ({ label: item, value: item }))}
-              labelField="label"
-              valueField="value"
-              placeholder="Select Leave type"
-              style={styles.dropdown}
-              value={selectedModule}
-              onChange={(item) => setSelectedModule(item.value)}
+          <View style={styles.inputWrapper}>
+            <TextInput
+              style={styles.input}
+              placeholder="Seach by Employee Name"
+              placeholderTextColor="#9ca3af"
+              autoCapitalize="characters"
             />
-
-            <Dropdown
-              data={statusOptions.map((item) => ({ label: item, value: item }))}
-              labelField="label"
-              valueField="value"
-              value={selectedStatus}
-              onChange={(item) => setSelectedStatus(item.value)}
-              placeholder="Select Status"
-              style={styles.dropdown}
+            <Feather
+              name="user"
+              size={20}
+              color="#6b7280"
+              style={styles.inputIcon}
             />
           </View>
 
@@ -148,25 +141,20 @@ export default function myLeaves() {
         </View>
       )}
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.ticketsContainer}>
-          {/* <Text style={styles.sectionTitle}>R</Text> */}
-          <View style={styles.emptyState}>
-            <MaterialIcons name="error" size={48} color="#ef4444" />
-            <Text style={styles.emptyStateText}>No records found</Text>
-            {/* <Text style={styles.emptyStateSubtext}>
-              Create a new ticket to get help from our support team
-            </Text> */}
-          </View>
-        </View>
-      </ScrollView>
+      <AppliedExpenseCard
+        title="Accommodation Expense"
+        expenseDate="2025-06-11"
+        appliedDate="2025-06-11"
+        amount={1000}
+        status="Applied"
+      />
 
       <TouchableOpacity
         style={styles.floatingButton}
         onPress={handleRaiseTicket}
       >
         <Feather name="plus" size={20} color="white" />
-        <Text style={styles.floatingButtonText}>Apply Leave</Text>
+        <Text style={styles.floatingButtonText}>Apply Expense</Text>
       </TouchableOpacity>
     </View>
   );
@@ -240,10 +228,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#1f2937",
   },
-  dropdownRow: {
+  inputWrapper: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
+    alignItems: "center",
+    backgroundColor: "#f9fafb",
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    elevation: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
   dropdown: {
     flex: 1,

@@ -13,6 +13,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import ModalDropdown from "react-native-modal-dropdown";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { Dropdown } from "react-native-element-dropdown";
 
 export default function SupportScreen() {
   const [fromDate, setFromDate] = useState("");
@@ -22,8 +23,8 @@ export default function SupportScreen() {
   const [selectedModule, setSelectedModule] = useState("Select Module");
   const [selectedStatus, setSelectedStatus] = useState("Select Status");
 
-  const moduleOptions = ["Login", "Leave", "Payroll", "Attendance"];
-  const statusOptions = ["Pending", "Resolved", "In Progress"];
+  const moduleOptions = ["Login", "Leave", "Payroll", "Attendance "];
+  const statusOptions = ["Pending", "Resolved", "In Progress "];
 
   const handleReset = () => {
     setFromDate("");
@@ -105,22 +106,24 @@ export default function SupportScreen() {
           )}
 
           <View style={styles.dropdownRow}>
-            <ModalDropdown
-              options={moduleOptions}
-              defaultValue={selectedModule}
+            <Dropdown
+              data={moduleOptions.map((item) => ({ label: item, value: item }))}
+              labelField="label"
+              valueField="value"
+              placeholder="Select Department"
               style={styles.dropdown}
-              dropdownTextStyle={{ fontSize: 14 }}
-              textStyle={styles.dropdownText}
-              onSelect={(index, value) => setSelectedModule(value)}
+              value={selectedModule}
+              onChange={(item) => setSelectedModule(item.value)}
             />
 
-            <ModalDropdown
-              options={statusOptions}
-              defaultValue={selectedStatus}
+            <Dropdown
+              data={statusOptions.map((item) => ({ label: item, value: item }))}
+              labelField="label"
+              valueField="value"
+              value={selectedStatus}
+              onChange={(item) => setSelectedStatus(item.value)}
+              placeholder="Select Status"
               style={styles.dropdown}
-              dropdownTextStyle={{ fontSize: 14 }}
-              textStyle={styles.dropdownText}
-              onSelect={(index, value) => setSelectedStatus(value)}
             />
           </View>
 
@@ -167,7 +170,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent:"center",
     paddingHorizontal: 20,
     paddingVertical: 15,
     backgroundColor: 'white',
@@ -178,11 +181,13 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   headerTitle: {
+    // flex:1,
     fontSize: 18,
     fontWeight: '600',
     color: '#3b82f6',
   },
   filterButton: {
+    alignSelf:"flex-end",
     padding: 5,
   },
   content: {

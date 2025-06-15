@@ -1,50 +1,174 @@
-# Welcome to your Expo app 👋
+# 👨‍💼 Employee Management App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A full-featured **Employee Management mobile application** built using **React Native + Expo Router**. This app provides a seamless experience with **authentication**, a **custom splash screen**, and a modern layout using **Drawer + Bottom Tab Navigation**.
 
-## Get started
+---
 
-1. Install dependencies
+## 🌟 Features Overview
 
-   ```bash
-   npm install
-   ```
+✅ Custom **Splash Screen** with async login check  
+✅ Persistent **Login Authentication** using AsyncStorage  
+✅ **Drawer Navigation** for global menu access  
+✅ **Bottom Tab Navigation** inside drawer for sectioned access  
+✅ Live **current date and time UI**  
+✅ Clean and interactive **Home Page** for employees  
+✅ Fully responsive mobile design  
+✅ Well-structured navigation flow with Expo Router  
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 📲 App Flow: From Splash to Dashboard
 
-In the output, you'll find options to open the app in a
+### 1. 🌀 Splash Screen
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- The app opens with a custom splash screen (`SplashScreen.jsx`)
+- Displays a welcome message and loader for **2 seconds**
+- During this time, it checks if a user is already logged in using `AsyncStorage`
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+```jsx
+// Simulate splash delay and fetch login state
+await new Promise(resolve => setTimeout(resolve, 2000));
+````
 
-## Get a fresh project
+---
 
-When you're ready, run:
+### 2. 🔐 Login Page (`index.js`)
 
-```bash
-npm run reset-project
+* If the user is **not logged in**, the app navigates to the **login screen**
+* Upon successful login, `AsyncStorage.setItem("isLoggedIn", "true")` is called to persist login state
+* On re-launch, this login state is read to skip login
+
+---
+
+### 3. 🏠 Home Page
+
+* Once logged in, the user is taken to the **Home screen**
+* Displays current day, date, year
+* Includes a **“Punch Out”** button for employee attendance logic
+* Minimal and intuitive UI
+
+---
+
+### 4. 🧭 Drawer Navigation (`(drawer)/_layout.jsx`)
+
+* Custom drawer layout shows the global navigation
+* Contains:
+
+  * Home
+  * Profile
+  * Logout (optional)
+
+---
+
+### 5. 📑 Tab Navigation (`(tabs)/home.jsx`, `profile.jsx`)
+
+* Nested inside Drawer using `expo-router`
+* Allows switching between:
+
+  * Dashboard / Home
+  * Profile Page
+
+---
+
+## 🧾 Folder Structure
+
+```
+app/
+├── _layout.jsx              # Root layout with splash + routing logic
+├── SplashScreen.jsx         # Custom splash screen UI
+├── index.js                 # Login / Welcome screen
+├── (drawer)/                # Drawer navigation layout
+│   ├── _layout.jsx
+│   └── index.js             # Home screen after login
+    └── (tabs)/              # Tab screens inside drawer
+      ├── home.jsx
+      └── profile.jsx
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 📦 Dependencies Used
 
-To learn more about developing your project with Expo, look at the following resources:
+| Package                                             | Purpose                                  |
+| --------------------------------------------------- | ---------------------------------------- |
+| `expo-router`                                       | File-based routing and nested navigators |
+| `@react-navigation/drawer`                          | Drawer-based navigation                  |
+| `@react-navigation/bottom-tabs`                     | Bottom tab navigation                    |
+| `@react-native-async-storage/async-storage`         | Persist login/auth state                 |
+| `expo-status-bar`                                   | Control status bar color and visibility  |
+| `react-native-vector-icons` or `@expo/vector-icons` | Icons in navigation and buttons          |
+| `react-native-safe-area-context`                    | For safe area handling                   |
+| `react-native-gesture-handler`                      | For navigation gestures                  |
+| `react-native-reanimated`                           | Drawer/tab animation support             |
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 🛠 How It Works (Logic Flow)
 
-Join our community of developers creating universal apps.
+```js
+// Inside app/_layout.jsx
+if (isLoading) {
+  return <SplashScreen />;
+}
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+return (
+  <Stack>
+    {isLoggedIn ? (
+      <Stack.Screen name="(drawer)" />
+    ) : (
+      <Stack.Screen name="index" />
+    )}
+  </Stack>
+);
+```
+
+* App checks login status using `AsyncStorage.getItem('isLoggedIn')`
+* If true → goes to `(drawer)` layout
+* Else → shows login page at `index.js`
+* Drawer screen contains bottom tabs (home & profile)
+
+
+## 🚀 Getting Started
+
+### 🧱 Prerequisites
+
+* Node.js installed
+* Expo CLI (`npm install -g expo-cli`)
+
+### 🔧 Setup
+
+```bash
+git clone https://github.com/yourusername/employee-management-app.git
+cd employee-management-app
+npm install
+npx expo start
+```
+
+---
+
+## 🧠 What I Learned
+
+* Structuring React Native apps with nested navigation
+* Using `AsyncStorage` for login state
+* Managing conditional routing in `expo-router`
+* Creating responsive and modern UI layouts
+* Implementing a splash screen delay with async logic
+
+---
+
+## 👤 About the Developer
+
+Made with ❤️ by **Arpit Rai**
+
+📬 [arpitrai@example.com](mailto:arpitrai@example.com)
+🌐 [LinkedIn](https://linkedin.com/in/arpitrai) | [GitHub](https://github.com/arpitr18)
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+> *Feel free to fork, contribute or use this project as inspiration for your own learning journey.*
+
+

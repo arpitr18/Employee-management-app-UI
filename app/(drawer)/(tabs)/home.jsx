@@ -5,78 +5,109 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
 import { DrawerActions } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 
 export default function index() {
   const navigation = useNavigation();
+  const router = useRouter();
 
   const openDrawer = () => {
     navigation.dispatch(DrawerActions.openDrawer());
   };
-  const now = new Date();
 
+  const now = new Date();
   const day = now.toLocaleDateString("en-US", { weekday: "long" }); // e.g., "Wednesday"
   const date = now.toLocaleDateString("en-US", {
     day: "numeric",
     month: "long",
   }); // e.g., "12 June"
   const year = now.getFullYear(); // e.g., 2025
+
   const featureCards = [
     {
       title: "MY ATTENDANCE",
       icon: "user",
       color: "#10b981",
-      route: "/(comps)/myAttendence",
+      route: "/myAttendence",
     },
     {
       title: "TEAM ATTENDANCE",
       icon: "bar-chart",
       color: "#3b82f6",
-      route: "/(comps)/teamAttendence",
+      route: "/teamAttendence",
     },
-    {
-      title: "MY REGULARIZATION",
-      icon: "user-check",
-      color: "#8b5cf6",
-      route: "/(comps)/teamAttendence",
-    },
-    {
-      title: "TEAM REGULARIZATION",
-      icon: "calendar",
-      color: "#f59e0b",
-      route: "/(comps)/teamAttendence",
-    },
+    // {
+    //   title: "MY REGULARIZATION",
+    //   icon: "user-check",
+    //   color: "#8b5cf6",
+    //   route: "/myRegularization",
+    // },
+    // {
+    //   title: "TEAM REGULARIZATION",
+    //   icon: "calendar",
+    //   color: "#f59e0b",
+    //   route: "/myRegularization",
+    // },
     {
       title: "MY LEAVES",
       icon: "send",
       color: "#06b6d4",
-      route: "/(comps)/teamAttendence",
+      route: "/myLeaves",
     },
     {
       title: "TEAM LEAVES",
       icon: "users",
       color: "#84cc16",
-      route: "/(comps)/teamAttendence",
+      route: "/teamLeaves",
     },
     {
       title: "MY EXPENSE",
       icon: "dollar-sign",
       color: "#ef4444",
-      route: "/(comps)/teamAttendence",
+      route: "/myExpense",
     },
     {
       title: "TEAM EXPENSE",
       icon: "settings",
       color: "#f97316",
-      route: "/(comps)/teamAttendence",
+      route: "/teamExpense",
     },
   ];
+
+  const handleCardPress = (card) => {
+    try {
+      // router.dismissAll();
+      // router.push(card.route);
+      router.replace(card.route);
+    } catch (error) {
+      Alert.alert(
+        "Feature Coming Soon",
+        `${card.title} feature will be available soon!`,
+        [{ text: "OK" }]
+      );
+      console.log(`Navigation error for ${card.route}:`, error);
+    }
+  };
+
+  const handlePunchOut = () => {
+    Alert.alert("Confirm Punch Out", "Are you sure you want to Punch Out?", [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Logout",
+        style: "destructive",
+        onPress: () => {
+          Alert.alert("Punched Out", "Successful");
+        },
+      },
+    ]);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -99,39 +130,39 @@ export default function index() {
 
         <View style={styles.dateCard}>
           <View style={styles.dateInfo}>
-            <Text style={styles.dayText}>{day} </Text>
-            <Text style={styles.dateText}>{date} </Text>
-            <Text style={styles.yearText}>{year} </Text>
+            <Text style={styles.dayText}>{day}</Text>
+            <Text style={styles.dateText}>{date}</Text>
+            <Text style={styles.yearText}>{year}</Text>
           </View>
-          <TouchableOpacity style={styles.punchButton}>
+          <TouchableOpacity onPress={handlePunchOut} style={styles.punchButton}>
             <Text style={styles.punchButtonText}>PUNCH OUT</Text>
           </TouchableOpacity>
         </View>
       </LinearGradient>
-
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.cardsContainer}>
-          {featureCards.map((card, index) => (
-            <TouchableOpacity
-              onPress={() => {
-                router.push(card.route);
-              }}
-              key={index}
-              style={styles.featureCard}
+      <View style={styles.cardsContainer}>
+        {featureCards.map((card, index) => (
+          <TouchableOpacity
+            onPress={() => handleCardPress(card)}
+            key={index}
+            style={styles.featureCard}
+            activeOpacity={0.7}
+          >
+            <View
+              style={[
+                styles.iconContainer,
+                { backgroundColor: `${card.color}20` },
+              ]}
             >
-              <View
-                style={[
-                  styles.iconContainer,
-                  { backgroundColor: `${card.color}20` },
-                ]}
-              >
-                <Feather name={card.icon} size={32} color={card.color} />
-              </View>
-              <Text style={styles.cardTitle}>{card.title}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+              <Feather name={card.icon} size={32} color={card.color} />
+            </View>
+            <Text style={styles.cardTitle}>{card.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      {/* <ScrollView
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+      ></ScrollView> */}
     </SafeAreaView>
   );
 }
@@ -185,7 +216,7 @@ const styles = StyleSheet.create({
     backdropFilter: "blur(10px)",
   },
   dateInfo: {
-    alignItems: "center",
+    flex: 1,
   },
   dayText: {
     fontSize: 18,
@@ -207,6 +238,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 25,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
   punchButtonText: {
     color: "white",
@@ -222,6 +258,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     paddingVertical: 20,
+    paddingHorizontal: 20,
   },
   featureCard: {
     width: "48%",
